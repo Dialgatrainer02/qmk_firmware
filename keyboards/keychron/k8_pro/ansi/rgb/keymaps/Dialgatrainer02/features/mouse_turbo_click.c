@@ -44,9 +44,10 @@
 //
 // WARNING: The keyboard might become unresponsive if the period is too small.
 // I suggest setting this no smaller than 10.
-#ifndef MOUSE_TURBO_CLICK_PERIOD
-#define MOUSE_TURBO_CLICK_PERIOD 80
-#endif  // MOUSE_TURBO_CLICK_PERIOD
+//#ifndef MOUSE_TURBO_CLICK_PERIOD
+int MOUSE_TURBO_CLICK_PERIOD = 80;
+//#define MOUSE_TURBO_CLICK_PERIOD 80
+//#endif  // MOUSE_TURBO_CLICK_PERIOD
 
 static deferred_token click_token = INVALID_DEFERRED_TOKEN;
 static bool click_registered = false;
