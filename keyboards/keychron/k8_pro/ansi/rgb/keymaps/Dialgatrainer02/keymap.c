@@ -15,6 +15,7 @@
  */
 
 #include QMK_KEYBOARD_H
+#include "features/mouse_turbo_click.h"
 
 // clang-format off
 enum layers{
@@ -26,7 +27,8 @@ enum layers{
 
 enum custom_keycodes {
   BRACES = SAFE_RANGE,
-  BDCLK,
+  DBLCLK,
+  TURBO,
 };
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [MAC_BASE] = LAYOUT_ansi_87( 
@@ -58,33 +60,38 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TRNS,  BT_HST1,  BT_HST2,  BT_HST3,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
      RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
      KC_TRNS,  RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,           
-     KC_TRNS,            KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  BAT_LVL,  NK_TOGG,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,            KC_TRNS,   
-     KC_TRNS,  KC_TRNS,  KC_TRNS,                                KC_TRNS,                                KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  DBCLK,    KC_TRNS)
+     KC_TRNS,            KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  BAT_LVL,  NK_TOGG,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,            TURBO,   
+     KC_TRNS,  KC_TRNS,  KC_TRNS,                                KC_TRNS,                                KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  DBLCLK,    KC_TRNS)
     
 };
 
-const uint8_t mods = get_mods();
-const uint8_t oneshot_mods = get_oneshot_mods();
 
-switch (keycode) {
-  case DBLCLK:  // Double click the left mouse button.
-  if (record->event.pressed) {
-    SEND_STRING(SS_TAP(X_BTN1) SS_DELAY(50) SS_TAP(X_BTN1));
-  }
-  return false;
-  case BRACES:  // Types [], {}, or <> and puts cursor between braces.
+bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+  if (!process_mouse_turbo_click(keycode, record, TURBO)) { return false; }
+  const uint8_t mods = get_mods();
+  const uint8_t oneshot_mods = get_oneshot_mods();
+  switch (keycode) {
+    case DBLCLK:  // Double click the left mouse button.
     if (record->event.pressed) {
-      clear_oneshot_mods();  // Temporarily disable mods.
-      unregister_mods(MOD_MASK_CSAG);
-      if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
-        SEND_STRING("{}");
-      } else if ((mods | oneshot_mods) & MOD_MASK_CTRL) {
-        SEND_STRING("<>");
-      } else {
-        SEND_STRING("[]");
-      }
-      tap_code(KC_LEFT);  // Move cursor between braces.
-      register_mods(mods);  // Restore mods.
+      SEND_STRING(SS_TAP(X_BTN1) SS_DELAY(50) SS_TAP(X_BTN1));
     }
     return false;
+    case BRACES:  // Types [], {}, or <> and puts cursor between braces.
+      if (record->event.pressed) {
+        clear_oneshot_mods();  // Temporarily disable mods.
+        unregister_mods(MOD_MASK_CSAG);
+        if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
+          SEND_STRING("{}");
+        } else if ((mods | oneshot_mods) & MOD_MASK_CTRL) {
+          SEND_STRING("<>");
+        } else {
+          SEND_STRING("[]");
+        }
+        tap_code(KC_LEFT);  // Move cursor between braces.
+        register_mods(mods);  // Restore mods.
+      }
+      return false;
+  }
+  return true;
 }
+
