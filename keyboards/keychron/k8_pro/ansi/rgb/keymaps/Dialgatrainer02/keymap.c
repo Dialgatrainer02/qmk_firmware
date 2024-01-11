@@ -23,6 +23,7 @@ enum layers{
   LNX_BASE,
   LNX_FN,
   LNX_MO,
+  GAME,
 };
 
 enum custom_keycodes {
@@ -33,11 +34,12 @@ enum custom_keycodes {
   TURBO_DN,
   USRNAME,
   LOCK,
+  BASE,
 };
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [LNX_BASE] = LAYOUT_ansi_87( 
      KC_ESC,   KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,             TT(LNX_MO),LOCK,     RGB_MOD,
-     KC_GRV,   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,     KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,  KC_INS,    KC_HOME,  KC_PGUP,
+     KC_GRV,   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,     KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,  KC_INS,    KC_HOME,  TG(GAME),
      KC_TAB,   KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,     KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,     BRACES,   BRACES,   KC_BSLS,  KC_DEL,    KC_END,   KC_PGDN,
      KC_CAPS,  KC_A,     KC_S,     KC_D,     KC_F,     KC_G,     KC_H,     KC_J,     KC_K,     KC_L,     KC_SCLN,  KC_QUOT,            KC_ENT,              
      KC_LSFT,            KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,            KC_RSFT,             KC_UP,    
@@ -57,7 +59,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      EE_CLR,   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
      KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            DM_PLY1,           
      KC_TRNS,            KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,            TURBO,   
-     AC_TOGG,  KC_TRNS,  USRNAME,                                KC_TRNS,                                QK_REP,   QM_REC1,  KC_TRNS,  KC_TRNS,  TURBO_DN, DBLCLK,   TURBO_UP),
+     AC_TOGG,  KC_TRNS,  USRNAME,                                KC_TRNS,                                QK_REP,   DM_REC1,  KC_TRNS,  DM_RSTP,  TURBO_DN, DBLCLK,   TURBO_UP),
+[GAME] = LAYOUT_ansi_87( 
+     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,  BASE,     KC_TRNS,
+     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  DM_REC1,  KC_TRNS,  DM_REC2,
+     KC_TRNS,  KC_TRNS,  KC_W,     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  DM_PLY1,  DM_RSTP,  DM_PLY2,
+     KC_TRNS,  KC_A,     KC_S,  KC_D,        KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,           
+     OSM(MOD_LSFT),      KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,            TURBO,   
+ OSM(MOD_LCTL), KC_TRNS, OSM(MOD_LALT ),                         KC_TRNS,                                KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  TURBO_DN, DBLCLK,   TURBO_UP),
+
 
 };
 
@@ -108,13 +118,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         register_mods(mods);  // Restore mods.
       }
       return false;
-    case USRNAME:  // decrease turbo speed
+    case USRNAME:  // send my username
       if (record->event.pressed) {
         SEND_STRING("Dialgatrainer069");
       }
       return false;
       
-    case LOCK:  // decrease turbo speed
+    case LOCK:  // super l combo
     if (record->event.pressed) {
       clear_oneshot_mods();  // Temporarily disable mods.
       unregister_mods(MOD_MASK_CSAG);
@@ -122,10 +132,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
       register_mods(mods);
     }
     return false;
+    case BASE:
+    if (record->event.pressed) {
+      layer_move(LNX_BASE);
+    }
+    return false;
   }
   return true;
 }
-
+//make bound keys ona higher layer orange
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     if (get_highest_layer(layer_state) > 0) {
         uint8_t layer = get_highest_layer(layer_state);
@@ -141,6 +156,34 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             }
         }
     }
-    return false;
+  const uint8_t oneshot_mods = get_oneshot_mods();
+  if (oneshot_mods & MOD_MASK_CTRL) {
+    rgb_matrix_set_color(76,RGB_RED);
+  } else if (oneshot_mods & MOD_MASK_SHIFT) {
+    rgb_matrix_set_color(63,RGB_RED);
+  } else if (oneshot_mods & MOD_MASK_ALT) {
+    rgb_matrix_set_color(78,RGB_RED);
+  }  
+  return false;
 }
- 
+
+// disable things that could interfrer with the game
+layer_state_t layer_state_set_user(layer_state_t state) {
+    switch (get_highest_layer(state)) {
+    case GAME:
+        //disable things
+        autocorrect_toggle();
+        autoshift_toggle();
+        caps_word_off();
+        break;
+    default:
+       autocorrect_toggle();
+       autoshift_toggle();
+       caps_word_on(); 
+       clear_oneshot_mods();
+    }
+  return state;
+}
+
+
+
