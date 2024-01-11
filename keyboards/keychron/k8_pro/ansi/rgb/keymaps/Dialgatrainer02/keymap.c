@@ -55,9 +55,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,  KC_TRNS,  KC_TRNS,
      KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
      EE_CLR,   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
-     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,           
+     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            DM_PLY1,           
      KC_TRNS,            KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,            TURBO,   
-     AC_TOGG,  KC_TRNS,  USRNAME,                                KC_TRNS,                                QK_REP,   KC_TRNS,  KC_TRNS,  KC_TRNS,  TURBO_DN, DBLCLK,   TURBO_UP),
+     AC_TOGG,  KC_TRNS,  USRNAME,                                KC_TRNS,                                QK_REP,   QM_REC1,  KC_TRNS,  KC_TRNS,  TURBO_DN, DBLCLK,   TURBO_UP),
 
 };
 
@@ -80,8 +80,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
       //click speed up means period is lower
       extern int MOUSE_TURBO_CLICK_PERIOD; // bring in the varible from ther header
       MOUSE_TURBO_CLICK_PERIOD -= 5;//mOuse turbo click period is defined in  mouse_turbo_click.c which isnt sourced however the header is
-      if (MOUSE_TURBO_CLICK_PERIOD < 15) {
-          MOUSE_TURBO_CLICK_PERIOD = 15;
+      if (MOUSE_TURBO_CLICK_PERIOD <= 15) {
+          MOUSE_TURBO_CLICK_PERIOD = 20;
       }
     }
     return false;
@@ -143,3 +143,4 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     }
     return false;
 }
+ 
