@@ -27,7 +27,7 @@ enum layers{
 };
 
 enum custom_keycodes {
-  BRACES = SAFE_RANGE,
+  BRACES = NEW_SAFE_RANGE,
   DBLCLK,
   TURBO,
   TURBO_UP,
@@ -58,19 +58,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,  BASE,     KC_TRNS,
      KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
      EE_CLR,   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
-     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            DM_PLY1,
+     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,
      AS_TOGG,            KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,            TURBO,
-     AC_TOGG,  KC_TRNS,  USRNAME,                                KC_TRNS,                                QK_REP,   DM_REC1,  KC_TRNS,  DM_RSTP,  TURBO_DN, DBLCLK,   TURBO_UP),
+     AC_TOGG,  KC_TRNS,  USRNAME,                                KC_TRNS,                                QK_REP,   KC_TRNS,  KC_TRNS,  KC_TRNS,  TURBO_DN, DBLCLK,   TURBO_UP),
 [GAME] = LAYOUT_tkl_ansi(
-     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,  BASE,     KC_TRNS,
+     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  TURBO_DN,  TURBO,  TURBO_UP,  KC_TRNS,  KC_TRNS,  KC_TRNS,            DBLCLK,   BASE,     KC_TRNS,
      KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  DM_REC1,  KC_TRNS,  DM_REC2,
-     KC_TRNS,  KC_TRNS,  KC_W,     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  DM_PLY1,  DM_END,  DM_PLY2,
-     QK_LOCK,  KC_A,     KC_S,  KC_D,        KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,
-     KC_LSFT,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,            TURBO,
-     KC_LCTL, KC_TRNS, KC_LALT,                        KC_TRNS,                                KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  TURBO_DN, DBLCLK,   TURBO_UP),
+     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  DM_PLY1,  KC_TRNS,  DM_PLY2,
+     QK_LOCK,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,
+     KC_LSFT,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,            KC_TRNS,
+     KC_LCTL, KC_TRNS, KC_LALT,                        KC_TRNS,                                KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS, KC_TRNS,   KC_TRNS),
 
 };
-
 bool recording = false;//varibles for dyn macro recording and direction
 int8_t macro  = 0;
 
@@ -122,7 +121,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
       return false;
     case USRNAME:  // send my username
       if (record->event.pressed) {
-        SEND_STRING("Dialgatrainer069"SS_TAP(X_ENTER));
+        send_string("Dialgatrainer069"SS_TAP(X_ENTER));
       }
       return false;
 
@@ -152,6 +151,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
   }
   return true;
 }
+
+/*
+bool dip_switch_update_user(uint8_t index, bool active) {
+    switch (index) {
+        case 0:
+            if(active) { layer_on(GAME); } else { layer_off(GAME); }
+            break;
+    }
+    return true;
+}
+*/
 
 //make bound keys on a higher layer orange
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
@@ -198,12 +208,19 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     rgb_matrix_set_color(49, RGB_RED);
     rgb_matrix_set_color(32, RGB_RED);
   }
+  if (IS_LAYER_ON(GAME)) {
+    rgb_matrix_set_color(35, RGB_GREEN);//w
+    rgb_matrix_set_color(52, RGB_GREEN);//s
+    rgb_matrix_set_color(51, RGB_GREEN);//a
+    rgb_matrix_set_color(53, RGB_GREEN);//d
+  }
   return false;
 }
 
 void dynamic_macro_record_start_user(int8_t direction) {
     recording = true;
-    macro = direction;//todo fix shift issue when recording and playing back dynamic macros
+    macro = direction;//todo fix shift issue when recording and playing back dynamic macros`
+    unregister_mods(MOD_MASK_SHIFT);
 }
 
 void dynamic_macro_record_end_user(int8_t direction){
@@ -225,8 +242,8 @@ layer_state_t layer_state_set_user(layer_state_t state) {
        autocorrect_enable();//reset from game layer
        autoshift_enable();
        caps_word_on();
-       clear_oneshot_mods();//clear mods that arent being phyicaly held
-       clear_weak_mods();
+       clear_oneshot_mods();//clear mods
+       clear_mods();
        cancel_key_lock();
        break;
     }
