@@ -17,6 +17,7 @@
 #include QMK_KEYBOARD_H
 #include "features/mouse_turbo_click.h"
 #include "features/sentence_case.h"
+#include "features/email.h"
 
 // clang-format off
 enum layers{
@@ -33,6 +34,7 @@ enum custom_keycodes {
   TURBO_UP,
   TURBO_DN,
   USRNAME,
+  EMAIL,
   LOCK,
   BASE,
   DM_END,
@@ -51,23 +53,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TRNS,  BT_HST1,  BT_HST2,  BT_HST3,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
      RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
      KC_TRNS,  RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,
-     KC_TRNS,            KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  BAT_LVL,  NK_TOGG,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,            KC_TRNS,
-     KC_TRNS,  KC_TRNS,  KC_TRNS,                                KC_TRNS,                                KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,   KC_TRNS),
+     KC_TRNS,            KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  BAT_LVL,  NK_TOGG,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,             KC_WH_U,
+     KC_TRNS,  KC_TRNS,  KC_TRNS,                                KC_TRNS,                                KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,   KC_WH_L,  KC_WH_D,   KC_WH_R),
 
 [LNX_MO] = LAYOUT_tkl_ansi(
      KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,  BASE,     KC_TRNS,
      KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
      EE_CLR,   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
-     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,
-     AS_TOGG,            KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,            TURBO,
-     AC_TOGG,  KC_TRNS,  USRNAME,                                KC_TRNS,                                QK_REP,   KC_TRNS,  KC_TRNS,  KC_TRNS,  TURBO_DN, DBLCLK,   TURBO_UP),
+     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_BTN1,
+     AS_TOGG,            KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_BTN2,            KC_MS_U,
+     AC_TOGG,  EMAIL,    USRNAME,                                KC_TRNS,                                QK_REP,   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_MS_L,  KC_MS_D,   KC_MS_R),
 [GAME] = LAYOUT_tkl_ansi(
      KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  TURBO_DN,  TURBO,  TURBO_UP,  KC_TRNS,  KC_TRNS,  KC_TRNS,            DBLCLK,   BASE,     KC_TRNS,
      KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  DM_REC1,  KC_TRNS,  DM_REC2,
      KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  DM_PLY1,  KC_TRNS,  DM_PLY2,
      QK_LOCK,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,
-     KC_LSFT,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,            KC_TRNS,
-     KC_LCTL, KC_TRNS, KC_LALT,                        KC_TRNS,                                KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS, KC_TRNS,   KC_TRNS),
+     KC_LSFT,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,                      KC_TRNS,           KC_TRNS,
+     KC_LCTL, KC_TRNS, KC_LALT,                        KC_TRNS,                                          KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS, KC_TRNS,   KC_TRNS),
 
 };
 bool recording = false;//varibles for dyn macro recording and direction
@@ -117,13 +119,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
         tap_code(KC_LEFT);  // Move cursor between braces.
         register_mods(mods);  // Restore mods.
-      }
-      return false;
+    }
+    return false;
     case USRNAME:  // send my username
       if (record->event.pressed) {
         send_string("Dialgatrainer069"SS_TAP(X_ENTER));
-      }
-      return false;
+    }
+    return false;
 
     case LOCK:  // super l combo
     if (record->event.pressed) {
@@ -131,6 +133,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
       unregister_mods(MOD_MASK_CSAG);
       SEND_STRING(SS_LGUI("l"));
       register_mods(mods);
+    }
+    return false;
+    case EMAIL:
+    if (record->event.pressed) {
+        if (strcmp(GMAIL,"invalid@example") == 1 ) {
+            SEND_STRING(GMAIL);
+        }
     }
     return false;
     case BASE:
