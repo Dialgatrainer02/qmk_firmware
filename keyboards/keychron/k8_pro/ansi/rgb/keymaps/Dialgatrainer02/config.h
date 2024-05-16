@@ -19,3 +19,4 @@
 
 #define NO_MUSIC_MODE
 
+#define GMAIL "oliviabarker900@gmail.com"

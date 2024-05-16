@@ -245,12 +245,10 @@ layer_state_t layer_state_set_user(layer_state_t state) {
         //disable things
         autocorrect_disable();
         autoshift_disable();
-        caps_word_off();
         break;
     default:
        autocorrect_enable();//reset from game layer
        autoshift_enable();
-       caps_word_on();
        clear_oneshot_mods();//clear mods
        clear_mods();
        cancel_key_lock();
