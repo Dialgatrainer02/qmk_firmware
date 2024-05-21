@@ -123,7 +123,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     return false;
     case USRNAME:  // send my username
       if (record->event.pressed) {
-        send_string("Dialgatrainer069"SS_TAP(X_ENTER));
+        send_string_with_delay("Dialgatrainer069"SS_TAP(X_ENTER),5);
     }
     return false;
 
