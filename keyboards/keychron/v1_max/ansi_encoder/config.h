@@ -19,9 +19,7 @@
 #ifdef RGB_MATRIX_ENABLE
 /* RGB Matrix driver configuration */
 #    define DRIVER_COUNT 2
-#    define DRIVER_1_LED_COUNT 45
-#    define DRIVER_2_LED_COUNT 39
-#    define RGB_MATRIX_LED_COUNT (DRIVER_1_LED_COUNT + DRIVER_2_LED_COUNT)
+#    define RGB_MATRIX_LED_COUNT 81
 
 #    define SPI_SCK_PIN A5
 #    define SPI_MISO_PIN A6
@@ -47,7 +45,7 @@
 /* Turn off backlight on low brightness to save power */
 #    define RGB_MATRIX_BRIGHTNESS_TURN_OFF_VAL 32
 
-/* Indicator */
+/* Indications */
 #    define BT_HOST_LED_MATRIX_LIST \
         { 15, 16, 17 }
 

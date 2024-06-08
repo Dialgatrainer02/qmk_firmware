@@ -113,10 +113,6 @@ void wireless_init(void) {
     nkro.bluetooth = keymap_config.nkro;
 #    endif
 #endif
-#ifdef LEMOKEY_CALLBACK_ENABLE
-    register_wt_tasks();
-    register_record_process(process_record_wireless, false);
-#endif
 }
 
 /*
@@ -528,6 +524,15 @@ void wireless_task(void) {
     lemokey_wireless_common_task();
     battery_task();
     lpm_task();
+}
+
+void send_string_task(void) {
+    if ((get_transport() & TRANSPORT_WIRELESS) && wireless_get_state() == WT_CONNECTED) {
+        wireless_transport.task();
+#ifndef DISABLE_REPORT_BUFFER
+        report_buffer_task();
+#endif
+    }
 }
 
 wt_state_t wireless_get_state(void) {

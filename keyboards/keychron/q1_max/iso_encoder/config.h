@@ -45,7 +45,7 @@
 /* Turn off backlight on low brightness to save power */
 #    define RGB_MATRIX_BRIGHTNESS_TURN_OFF_VAL 32
 
-/* Caps lock indicating led */
+/* Indications */
 #    define CAPS_LOCK_INDEX 44
 #    define LOW_BAT_IND_INDEX \
         { 75 }
