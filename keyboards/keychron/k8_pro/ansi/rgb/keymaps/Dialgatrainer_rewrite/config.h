@@ -5,6 +5,8 @@
 #define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_RIVERFLOW
 #define RGB_MATRIX_DEFAULT_HUE 191 //purple
 
+//dragons might break stuff
+#define RGB_TRIGGER_ON_KEYDOWN
 
 //optimisations
 #define NO_MUSIC_MODE
@@ -16,5 +18,6 @@
 #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
 #define TAPPING_TOGGLE 2
 #define ONESHOT_TIMEOUT 5000
+#define FORCE_NKRO
 
 #define SENTENCE_CASE_TIMEOUT 2000

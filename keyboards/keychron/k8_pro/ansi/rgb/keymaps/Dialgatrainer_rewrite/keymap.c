@@ -31,12 +31,12 @@ enum custom_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [LNX_BASE] = LAYOUT_tkl_ansi(
-     KC_ESC,   KC_BRID,  KC_BRIU,  KC_MCTL,  KC_LPAD,  RGB_VAD,  RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU,           KC_SNAP,   KC_NO,    RGB_MOD,
+     KC_ESC,   KC_BRID,  KC_BRIU,  KC_MCTL,  KC_LPAD,  RGB_VAD,  RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU,           KC_NO,   KC_NO,    RGB_MOD,
      KC_GRV,   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,     KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_MINS,  KC_EQL,   KC_BSPC, KC_INS,    KC_HOME,  TG(LNX_MOD),
      KC_TAB,   KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,     KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,     KC_LBRC,  KC_RBRC,  KC_BSLS, KC_DEL,    DM_END,   KC_PGDN,
      KC_CAPS,  KC_A,     KC_S,     KC_D,     KC_F,     KC_G,     KC_H,     KC_J,     KC_K,     KC_L,     KC_SCLN,  KC_QUOT,            KC_ENT,
      KC_LSFT,            KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,            KC_RSFT,            KC_UP,
-     KC_LCTL,  KC_LOPTN, KC_LCMMD,                               KC_SPC,                                 KC_RCMMD, KC_ROPTN, MO(LNX_FN),KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT),
+     KC_LCTL,  KC_LGUI, KC_LALT,                               KC_SPC,                                 KC_RALT, KC_RGUI, MO(LNX_FN),KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT),
 
 [LNX_FN] = LAYOUT_tkl_ansi(
      KC_TRNS,  KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,             KC_TRNS,  KC_TRNS,  RGB_TOG,
@@ -48,9 +48,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [LNX_MOD] = LAYOUT_tkl_ansi(
      KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,  KC_TRNS,  KC_TRNS,
-     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_WH_U,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  DM_REC1,  KC_TRNS,  KC_TRNS,
-     KC_TRNS,  KC_TRNS,  KC_MS_U,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_WH_L,  KC_WH_D,  KC_WH_R,  KC_TRNS,  KC_TRNS,  KC_TRNS,  DM_PLY1,  DM_END,   KC_TRNS,
-     KC_TRNS,  KC_MS_L,  KC_MS_D,  KC_MS_R,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_MS_BTN1,
+     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  DM_REC1,  KC_TRNS,  KC_TRNS,
+     KC_TRNS,  KC_TRNS,  KC_MS_U,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_WH_U,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  DM_PLY1,  DM_END,   KC_TRNS,
+     KC_TRNS,  KC_MS_L,  KC_MS_D,  KC_MS_R,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_WH_L,  KC_WH_D,  KC_WH_R,  KC_TRNS,            KC_MS_BTN1,
      KC_TRNS,            KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_MS_BTN2,         KC_TRNS,
      KC_TRNS,  KC_TRNS,  KC_TRNS,                                KC_TRNS,                                KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS)
 };
@@ -72,6 +72,17 @@ static uint8_t fade_out_step_counter;
 static uint8_t recording_r, recording_g, recording_b;
 
 //**************** HELPER FUNCTIONS *****************//
+
+RGB get_secondary_colour(void) {
+    HSV hsv = rgb_matrix_get_hsv();
+    hsv.h = (hsv.h + 180) % 360;//% things means it can go past 360 so 270 + 180 = 90
+    if (hsv.s > 26) {// add one so its not 0
+        hsv.s = hsv.s - 25;
+    } else{
+        hsv.s = 25;//set sat to 25 if its too low
+    };
+    return hsv_to_rgb(hsv);
+};
 
 // I am unable to pass RGB[3] array pointer correctly so I get R, G, & B values like this instead
 uint8_t get_recording_red_rgb(uint8_t rgb, uint16_t value)
@@ -113,9 +124,13 @@ void reset_recording_blink(void)
 
 //**************** MATRIX SCANS *********************//
 
-bool rgb_matrix_indicators_user(void) //change function type to match with declaration in rgb_matrix.h
-{
-    // Blinking led indicator when recording Dynamic Macro with fading in/out
+
+void matrix_scan_user(void) {
+  sentence_case_task();//enable sentence case timeout
+}
+
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+     // Blinking led indicator when recording Dynamic Macro with fading in/out
     if (isRecording) {
 
         const uint16_t static_on_time = 500;
@@ -148,14 +163,7 @@ bool rgb_matrix_indicators_user(void) //change function type to match with decla
         }
         rgb_matrix_set_color(48, recording_r, recording_g, recording_b); //change from 0(esc) to 48(end)
     }
-    return false;
-};
-
-void matrix_scan_user(void) {
-  sentence_case_task();//enable sentence case timeout
-}
-
-bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    //layer change colouring
     if (get_highest_layer(layer_state) > 0) {
         uint8_t layer = get_highest_layer(layer_state);
 
@@ -165,18 +173,27 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 
                 if (index >= led_min && index < led_max && index != NO_LED &&
                 keymap_key_to_keycode(layer, (keypos_t){col,row}) > KC_TRNS) {
-                    rgb_matrix_set_color(index, RGB_ORANGE);//set colour to orange for keys which are in use on active layer
+                    RGB rgb = get_secondary_colour();
+                    rgb_matrix_set_color(index, rgb.r,rgb.g,rgb.b);//set colour to secondary colour when layer switches
                 }
             }
         }
     }
     return false;
 };
-
+// shows when sentence case is active
 void sentence_case_primed(bool primed) {
   // Change B0 to the pin for the LED to use.
   writePin(LED_CAPS_LOCK_PIN, primed);
 };
+//shows when caps word is active
+void caps_word_set_user(bool active) {
+    if (active) {
+        writePin(LED_CAPS_LOCK_PIN, active);
+    } else {
+        // Do something when Caps Word deactivates.
+    }
+}
 
 //custom keycodes
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
