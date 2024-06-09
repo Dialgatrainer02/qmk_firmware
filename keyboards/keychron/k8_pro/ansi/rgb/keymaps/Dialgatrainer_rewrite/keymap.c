@@ -35,7 +35,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_GRV,   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,     KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_MINS,  KC_EQL,   KC_BSPC, KC_INS,    KC_HOME,  TG(LNX_MOD),
      KC_TAB,   KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,     KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,     KC_LBRC,  KC_RBRC,  KC_BSLS, KC_DEL,    DM_END,   KC_PGDN,
      KC_CAPS,  KC_A,     KC_S,     KC_D,     KC_F,     KC_G,     KC_H,     KC_J,     KC_K,     KC_L,     KC_SCLN,  KC_QUOT,            KC_ENT,
-     KC_LSFT,            KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,            KC_RSFT,            KC_UP,
+     KC_LSFT,  KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,            KC_RSFT,            KC_UP,
      KC_LCTL,  KC_LGUI,  KC_LALT,                                KC_SPC,                                 KC_RALT,  KC_RGUI, MO(LNX_FN),KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT),
 
 [LNX_FN] = LAYOUT_tkl_ansi(
@@ -47,21 +47,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TRNS,  KC_TRNS,  KC_TRNS,                                KC_TRNS,                                KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS),
 
 [LNX_MOD] = LAYOUT_tkl_ansi(
-     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,  KC_TRNS,  KC_TRNS,
-     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  DM_REC1,  KC_TRNS,  KC_TRNS,
-     KC_TRNS,  KC_TRNS,  KC_MS_U,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_WH_U,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  DM_PLY1,  DM_END,   KC_TRNS,
+     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            DM_PLY1,  KC_TRNS,  DM_PLY2,
+     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  DM_REC1,  KC_TRNS,  DM_REC2,
+     KC_TRNS,  KC_TRNS,  KC_MS_U,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_WH_U,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  DM_END,   KC_TRNS,
      KC_TRNS,  KC_MS_L,  KC_MS_D,  KC_MS_R,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_WH_L,  KC_WH_D,  KC_WH_R,  KC_TRNS,            KC_MS_BTN1,
      KC_TRNS,            KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_MS_BTN2,         KC_TRNS,
      KC_TRNS,  KC_TRNS,  KC_TRNS,                                KC_TRNS,                                KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS)
 };
 
-
+// clang-format on
 //#########################################################################################################################################################################################################################################
 // fading led when dynamic macro recording from https://www.reddit.com/r/MechanicalKeyboards/comments/f4mk5t/qmk_docsexamples_on_blinking_led_during_dynamic/
 //**************** SOME GLOBALS *********************//
 
 // Config
-const float ledDimRatio = 0.50;
+const float ledDimRatio = 0.25;//default is 50
 bool isRecording = false;
 static uint16_t recording_blink_cycle_timer;
 static uint16_t recording_fade_in_timer;
@@ -72,13 +72,13 @@ static uint8_t fade_out_step_counter;
 static uint8_t recording_r, recording_g, recording_b;
 
 //**************** HELPER FUNCTIONS *****************//
-
+//used for any secondary colouring eg layer indicatation
 RGB get_secondary_colour(void) {
     HSV hsv = rgb_matrix_get_hsv();
     hsv.h = (hsv.h + 180) % 360;//% things means it can go past 360 so 270 + 180 = 90
     if (hsv.s > 26) {// add one so its not 0
         hsv.s = hsv.s - 25;
-    } else{
+    } else {
         hsv.s = 25;//set sat to 25 if its too low
     };
     return hsv_to_rgb(hsv);
@@ -189,7 +189,7 @@ void sentence_case_primed(bool primed) {
 //shows when caps word is active
 void caps_word_set_user(bool active) {
     if (active) {
-        writePinHigh(LED_CAPS_LOCK_PIN);
+        writePinHigh(LED_CAPS_LOCK_PIN);//change to look like one above
     } else {
         writePinLow(LED_CAPS_LOCK_PIN);
     }
@@ -207,8 +207,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     if (record->event.pressed) {
       if (isRecording == true) {
         dynamic_macro_stop_recording();
-      }
-      else {
+      } else {
         tap_code(KC_END);
       }
     }
@@ -229,3 +228,5 @@ void dynamic_macro_record_start_user(int8_t direction) {
 void dynamic_macro_record_end_user(int8_t direction) {
     isRecording = false;
 }
+
+//one shot mods not yet

@@ -16,8 +16,8 @@
 #define DYNAMIC_MACRO_NO_NESTING
 #define MOUSEKEY_INERTIA
 #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
-#define TAPPING_TOGGLE 2
+#define ONESHOT_TAP_TOGGLE 3
 #define ONESHOT_TIMEOUT 5000
 //#define FORCE_NKRO nkro doesnt work on wireless so off for now
-
+#undef AUTO_SHIFT_ENABLE
 #define SENTENCE_CASE_TIMEOUT 2000
