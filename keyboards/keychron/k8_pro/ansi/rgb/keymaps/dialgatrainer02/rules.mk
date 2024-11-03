@@ -15,3 +15,4 @@ CAPS_WORD_ENABLE = yes
 VIA_ENABLE = yes
 
 SRC += features/sentence_case.c
+SRC += features/socd_cleaner.c

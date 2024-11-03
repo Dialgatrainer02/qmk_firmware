@@ -16,6 +16,7 @@
 
 #include QMK_KEYBOARD_H
 #include "features/sentence_case.h"
+#include "features/socd_cleaner.h"
 
 // clang-format off
 enum layers{
@@ -59,6 +60,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //#########################################################################################################################################################################################################################################
 // fading led when dynamic macro recording from https://www.reddit.com/r/MechanicalKeyboards/comments/f4mk5t/qmk_docsexamples_on_blinking_led_during_dynamic/
 //**************** SOME GLOBALS *********************//
+
+
+socd_cleaner_t socd_v = {{KC_W, KC_S}, SOCD_CLEANER_LAST};
+socd_cleaner_t socd_h = {{KC_A, KC_D}, SOCD_CLEANER_LAST};
 
 // Config
 const float ledDimRatio = 0.25;//default is 50
